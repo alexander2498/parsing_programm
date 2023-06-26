@@ -25,7 +25,7 @@ export class SeleniumHelper {
     return this.driver.quit();
   }
 
-  private getHashCode(s: string) {
+  private _getHashCode(s: string) {
     return s.split("").reduce(function(a, b) {
       a = ((a << 5) - a) + b.charCodeAt(0);
       return a & a;
@@ -36,7 +36,7 @@ export class SeleniumHelper {
     await this.driver.get(url);
     await this.driver.sleep(5000);
     console.log('take screenshot: ' + url);
-    await this._takeScreenshot(this.getHashCode(url).toString());
+    await this._takeScreenshot(this._getHashCode(url).toString());
   }
 
   private async _takeScreenshot(prefix: string) {
