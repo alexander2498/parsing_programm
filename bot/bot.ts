@@ -1,6 +1,6 @@
 import {Telegraf} from 'telegraf';
 import {ISessionManager, SessionManager} from "./utils/SessionManager";
-import TelegrafContext from "telegraf/typings/context";
+import {TelegrafContext} from "telegraf/typings/context";
 import { PrismaClient } from '@prisma/client';
 
 
@@ -57,9 +57,9 @@ bot.on("message", async (ctx: TelegrafContext) => {
     for (const district of districts) {
       message += `${district.id}.${district.name}\n`;
     }
-    const areaNumber = ctx.message;
+    const areaNumber = ctx.message.text;
     await sessionManager.saveSession(ctx, {
-      areasNumber: parseInt(ctx.message),
+      areasNumber: parseInt(ctx.message.text),
       districtNumber: -1,
       lastMessageType: 2,
       salonNumber: -1
