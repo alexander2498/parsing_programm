@@ -74,7 +74,7 @@ export class SeleniumHelper {
       for (let i = 0; i < phonesBlocks.length; i++) {
         await phonesBlocks[i].click();
       }
-      await this.driver.sleep(10000);
+      await this.driver.sleep(1000);
 
       // await this._saveHtml('districtPage.html');
 

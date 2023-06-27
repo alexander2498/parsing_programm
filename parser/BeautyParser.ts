@@ -6,13 +6,13 @@ import {destructAllHelpers, SeleniumHelper} from "./SeleniumHelper";
 
 export class BeautyParser {
   private prisma: PrismaClient;
-  private seleniumHelper: SeleniumHelper;
+  private seleniumHelper: SeleniumHelper | null;
   private baseUrl: string;
 
   constructor() {
     this.prisma = new PrismaClient();
-    this.seleniumHelper = new SeleniumHelper();
     this.baseUrl = "https://msk.beauty.firmika.ru/";
+    this.seleniumHelper = null
   }
 
   public async parseDistricts() {
@@ -38,7 +38,7 @@ export class BeautyParser {
       console.log(areaName);
       const area = await this.prisma.areas.create({
         data: {
-          name: areaName
+          name: areaName as string
         }
       });
       console.log('------------------');
@@ -49,7 +49,7 @@ export class BeautyParser {
           data: {
             areaId: area.id,
             name: districtsLink.innerHTML,
-            link: districtsLink.getAttribute('href')
+            link: districtsLink.getAttribute('href') as string
           }
         })
       }
@@ -60,6 +60,7 @@ export class BeautyParser {
     const districts = await this.prisma.districts.findMany();
     const salonsData = [];
     for (const district of districts) {
+      this.seleniumHelper = new SeleniumHelper();
       const url = this.baseUrl + district.link;
       const html = await this.seleniumHelper.prepareDistrictPage(district.link);
       const dom = new JSDOM(html, {
@@ -106,16 +107,18 @@ export class BeautyParser {
         })
         console.log(salonLink, salonName, salonRating, salonRatingText, salonPrice, salonPriceText, salonAddress, salonPhone, salonSite);
         salonsData.push({
-          name: salonName,
-          link: salonLink,
+          name: salonName as string,
+          link: salonLink as string,
           rating: salonRating,
           price: salonPrice,
-          address: salonAddress,
-          phone: salonPhone,
-          site: salonSite
+          address: salonAddress as string,
+          phone: salonPhone as string,
+          site: salonSite,
+          districtId: district.id
         })
 
       }
+      await this.seleniumHelper.destruct();
 
     }
     await this.prisma.salons.createMany({

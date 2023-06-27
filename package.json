@@ -14,7 +14,8 @@
     "axios": "^1.4.0",
     "jsdom": "^22.1.0",
     "prisma": "^4.16.1",
-    "selenium-webdriver": "^4.10.0"
+    "selenium-webdriver": "^4.10.0",
+    "telegraf": "^4.12.2"
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.1",
