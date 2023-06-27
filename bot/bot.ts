@@ -34,13 +34,13 @@ export const sessionManager: ISessionManager<ISession> = new SessionManager<ISes
 
 const bot: Telegraf<TelegrafContext> = new Telegraf(botToken);
 
-let globalSalons: any = null;
+let globalSalons: any = [];
 
 bot.start(async (ctx: TelegrafContext) => {
   const areas = await prisma.areas.findMany();
   let message = `Добрый день! Выберите округ для поиска района. Для выбора напишите мне идентификатор находящийся около названия необходимого округа. \n`;
   for (const area of areas) {
-    message += `${area.id}.${area.name}\n`;
+    message += `${area.id}. ${area.name}\n`;
   }
   await sessionManager.saveSession(ctx, {
     areasNumber: -1,
@@ -51,7 +51,11 @@ bot.start(async (ctx: TelegrafContext) => {
 
   //delete huyina
 
-  globalSalons = JSON.parse(await fs.promises.readFile('salons.json', 'utf8'))
+  globalSalons = Array.from(JSON.parse(await fs.promises.readFile('salons.json', 'utf8')));
+  for (let i = 0; i < globalSalons.length; i++) {
+    globalSalons[i].districtId = globalSalons[i].districtId - 204;
+  }
+  console.log(globalSalons);
   // stop deleting
 
   await ctx.reply(message);
@@ -67,6 +71,9 @@ bot.on("message", async (ctx: TelegrafContext) => {
   }
 
   const session = await sessionManager.getSession(ctx);
+
+  console.log(session);
+
   if (session.lastMessageType === 1){
     const areaId = parseInt(ctx.message.text);
     const districts = await prisma.districts.findMany({
@@ -76,7 +83,7 @@ bot.on("message", async (ctx: TelegrafContext) => {
     });
     let message = `Выберите район для поиска салона. Для выбора напишите мне идентификатор находящийся около названия необходимого района. \n`;
     for (const district of districts) {
-      message += `${district.id}.${district.name}\n`;
+      message += `${district.id}. ${district.name}\n`;
     }
 
     await sessionManager.saveSession(ctx, {
@@ -106,7 +113,7 @@ bot.on("message", async (ctx: TelegrafContext) => {
       salons[i].id = i + 1;
     }
 
-    salons.filter((s) => {
+    salons=salons.filter((s: any) => {
       return s.districtId === districtId;
     });
 
@@ -115,7 +122,7 @@ bot.on("message", async (ctx: TelegrafContext) => {
 
     let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
     for (const salon of salons) {
-      message += `${salon.id}.${salon.name}\n`;
+      message += `${salon.id}. ${salon.name}\n`;
     }
     session.lastMessageType = 3;
     session.districtNumber = districtId;
@@ -139,12 +146,18 @@ bot.on("message", async (ctx: TelegrafContext) => {
     }
     salon = salons.find((s: any) => {
       return s.id === salonId
-    })
+    });
+
+    console.log(salon);
 
     //stop deleting hyina
-    let message = `Название: ${salon?.name}\nРейтинг: ${salon?.rating}/10\n Цена: ${salon?.price}\n Адрес: ${salon?.address}\n
-     Номер телефона: ${salon?.phone}\n Сайт: ${salon?.site}\n`;
+    const priceString = salon?.price === 1000000 ? '-' : salon?.price;
+
+    let message = `Название: ${salon?.name}\nРейтинг: ${salon?.rating}/10\nЦена: ${priceString}\nАдрес: ${salon?.address}\nНомер телефона: ${salon?.phone}\nСайт: ${salon?.site}\n`;
     session.salonNumber = salonId;
+
+    await sessionManager.saveSession(ctx, session);
+    await ctx.reply(message);
   }
 });
 
@@ -158,13 +171,13 @@ bot.action('by_price', async (ctx: TelegrafContext) => {
 
   //delete hyuina
 
-  const salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
+  let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
 
   for (let i = 0; i < salons.length; i++) {
     salons[i].id = i + 1;
   }
 
-  salons.filter((s) => {
+  salons=salons.filter((s) => {
     return s.districtId === session.districtNumber;
   });
   //stop deleting hyina
@@ -173,7 +186,7 @@ bot.action('by_price', async (ctx: TelegrafContext) => {
 
   let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
   for (const salon of salons) {
-    message += `${salon.id}.${salon.name}\n`;
+    message += `${salon.id}. ${salon.name}\n`;
   }
   session.lastMessageType = 3;
 
@@ -191,13 +204,13 @@ bot.action('by_rating', async (ctx: TelegrafContext) => {
 
   //delete hyuina
 
-  const salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
+  let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
 
   for (let i = 0; i < salons.length; i++) {
     salons[i].id = i + 1;
   }
 
-  salons.filter((s) => {
+  salons=salons.filter((s) => {
     return s.districtId === session.districtNumber;
   });
   //stop deleting hyina
@@ -206,7 +219,7 @@ bot.action('by_rating', async (ctx: TelegrafContext) => {
 
   let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
   for (const salon of salons) {
-    message += `${salon.id}.${salon.name}\n`;
+    message += `${salon.id}. ${salon.name}\n`;
   }
   session.lastMessageType = 3;
 

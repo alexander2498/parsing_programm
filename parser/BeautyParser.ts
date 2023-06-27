@@ -1,21 +1,9 @@
 import {JSDOM} from 'jsdom';
 import axios from 'axios';
 
-import {PrismaClient} from '@prisma/client';
+import {PrismaClient, Prisma} from '@prisma/client';
 import {destructAllHelpers, SeleniumHelper} from "./SeleniumHelper";
 import fs from "fs";
-
-type salonsCreateManyInput = {
-  id?: number
-  districtId: number
-  name: string
-  link: string
-  rating: number
-  price: number
-  address: string
-  phone: string
-  site: string
-}
 
 export class BeautyParser {
   private prisma: PrismaClient;
@@ -71,7 +59,7 @@ export class BeautyParser {
 
   public async parseSalons() {
     const districts = await this.prisma.districts.findMany();
-    const salonsData: Array<salonsCreateManyInput> = [];
+    const salonsData:  Prisma.salonsCreateManyInput[] = [];
     for (const district of districts) {
       this.seleniumHelper = new SeleniumHelper();
       const url = this.baseUrl + district.link;
@@ -128,13 +116,12 @@ export class BeautyParser {
           phone: salonPhone as string,
           site: salonSite,
           districtId: district.id
-        } as salonsCreateManyInput)
+        } as Prisma.salonsCreateManyInput);
 
       }
       await this.seleniumHelper.destruct();
 
     }
-    await fs.promises.writeFile("salons.json", JSON.stringify(salonsData), 'utf8');
     await this.prisma.salons.createMany({
       data: salonsData
     })
@@ -149,7 +136,7 @@ export class BeautyParser {
 }
 
 const beautyParser = new BeautyParser();
-beautyParser.parseDistricts().then(() => {
+beautyParser.parseSalons().then(() => {
   destructAllHelpers();
 });
 

@@ -1,4 +1,4 @@
-import TelegrafContext from "telegraf/typings/context";
+import {TelegrafContext} from "telegraf/typings/context";
 import {PrismaClient} from "@prisma/client";
 export interface ISessionManagerOptions<ISession> {
   initSession: ISession,
