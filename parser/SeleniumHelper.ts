@@ -44,6 +44,19 @@ export class SeleniumHelper {
       url = this.baseUrl + url;
       await this._openUrl(url);
 
+      const newColumnBtn = this.driver.findElement(By.css('.checkBoxCostumize__button'));
+      await newColumnBtn.click();
+
+      await this.driver.sleep(1000);
+      await this.driver.findElement(By.css("[for='colSite-filterCol']")).click();
+      await this.driver.findElement(By.css("[for='colAddress-filterCol']")).click();
+      await this.driver.findElement(By.css("[for='colPhone-filterCol']")).click();
+      await this.driver.sleep(1000);
+
+      await this.driver.findElement(By.css(".checkBoxCostumize__formButton.checkBoxCostumize__formButton--accept")).click()
+      await this.driver.sleep(1000);
+
+
       for (let i = 0; i < 100; i++) {
 
         try {
@@ -58,6 +71,12 @@ export class SeleniumHelper {
           break;
         }
       }
+
+      const phonesBlocks = await this.driver.findElements(By.css('.firmsTable__phoneLink'));
+      for (let i = 0; i < phonesBlocks.length; i++) {
+        await phonesBlocks[i].click();
+      }
+      await this.driver.sleep(1000);
 
       await this._saveHtml('districtPage.html');
 
@@ -128,7 +147,7 @@ const seleniumHelper = new SeleniumHelper();
 //   seleniumHelper.destruct();
 // });
 
-seleniumHelper.prepareSalonPage('firms.php?i=19031').then(() => {
+seleniumHelper.prepareDistrictPage('districts.php?district=62').then(() => {
   seleniumHelper.destruct();
 });
 
