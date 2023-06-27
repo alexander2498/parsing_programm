@@ -1,10 +1,13 @@
-import {Telegraf} from 'telegraf';
+import {Markup, Telegraf} from 'telegraf';
 import {ISessionManager, SessionManager} from "./utils/SessionManager";
 import {TelegrafContext} from "telegraf/typings/context";
 import { PrismaClient } from '@prisma/client';
 
 
-
+const sortButtons = Markup.inlineKeyboard([
+  Markup.callbackButton('По цене', 'by_price'),
+  Markup.callbackButton('По рейтингу', 'by_rating'),
+]).extra();
 
 const botToken: string = '6222679566:AAHI9ePcHAUu7nO88CCX8aVyvOzTPNv6YaY';
 
@@ -50,22 +53,102 @@ bot.on("message", async (ctx: TelegrafContext) => {
     return;
   }
 
+  if (ctx.message.text[0]==='/') {
+    return;
+  }
+
   const session = await sessionManager.getSession(ctx);
   if (session.lastMessageType === 1){
-    const districts = await prisma.districts.findMany();
-    let message = `Добрый день! Выберите район для поиска салона. Для выбора напишите мне идентификатор находящийся около названия необходимого района. \n`;
+    const areaId = parseInt(ctx.message.text);
+    const districts = await prisma.districts.findMany({
+      where: {
+        areaId
+      }
+    });
+    let message = `Выберите район для поиска салона. Для выбора напишите мне идентификатор находящийся около названия необходимого района. \n`;
     for (const district of districts) {
       message += `${district.id}.${district.name}\n`;
     }
-    const areaNumber = ctx.message.text;
+
     await sessionManager.saveSession(ctx, {
-      areasNumber: parseInt(ctx.message.text),
+      areasNumber: areaId,
       districtNumber: -1,
       lastMessageType: 2,
       salonNumber: -1
-    })
+    });
+
+    await ctx.reply(message);
   }
+  else if (session.lastMessageType === 2){
+    const districtId = parseInt(ctx.message.text);
+    const session = await sessionManager.getSession(ctx);
+    const salons = await prisma.salons.findMany({
+      where: {
+        districtId
+      }
+    });
+    let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
+    for (const salon of salons) {
+      message += `${salon.id}.${salon.name}\n`;
+    }
+    session.lastMessageType = 3;
+    session.districtNumber = districtId;
+    await sessionManager.saveSession(ctx, session);
+    await ctx.reply(message, sortButtons);
+  }
+  else if (session.lastMessageType === 3){
+    const salonId = parseInt(ctx.message.text);
+    const session = await sessionManager.getSession(ctx);
+    const salon = await prisma.salon.findUnique({
+      where: {
+        id: salonId
+      }
+    });
+    let message = `Название: ${salon.name}\nРейтинг: ${salon.rating}/10\n Цена: ${salon.price}\n Адрес: ${salon.address}\n Номер телефона: ${salon.phone}\n Сайт: ${salon.site}\n`;
+    session.salonNumber = salonId;
+  }
+});
+
+bot.action('by_price', async (ctx: TelegrafContext) => {
+  const session = await sessionManager.getSession(ctx);
+  const salons = await prisma.salons.findMany({
+    where: {
+      districtId: session.districtNumber
+    }
+  });
+
+  salons.sort((a: any, b: any) => b.price - a.price);
+
+  let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
+  for (const salon of salons) {
+    message += `${salon.id}.${salon.name}\n`;
+  }
+  session.lastMessageType = 3;
+
+  await sessionManager.saveSession(ctx, session);
+  await ctx.reply(message, sortButtons);
+});
+
+bot.action('by_rating', async (ctx: TelegrafContext) => {
+  const session = await sessionManager.getSession(ctx);
+  const salons = await prisma.salons.findMany({
+    where: {
+      districtId: session.districtNumber
+    }
+  });
+
+  salons.sort((a: any, b: any) => b.rating - a.rating);
+
+  let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
+  for (const salon of salons) {
+    message += `${salon.id}.${salon.name}\n`;
+  }
+  session.lastMessageType = 3;
+
+  await sessionManager.saveSession(ctx, session);
+  await ctx.reply(message, sortButtons);
 })
+
 
 bot.launch()
 
