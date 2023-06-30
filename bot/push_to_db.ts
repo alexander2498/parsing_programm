@@ -6,9 +6,12 @@ const prisma = new PrismaClient();
 
 async function main() {
   const globalSalons: Prisma.salonsCreateManyInput[] = Array.from(JSON.parse(await fs.promises.readFile('salons.json', 'utf8'))) as Prisma.salonsCreateManyInput[]
-  await prisma.salons.createMany({
-    data: globalSalons
-  })
+  for (const salon of globalSalons) {
+    await prisma.salons.create({
+      data: salon
+    });
+  }
+
 }
 
 main();

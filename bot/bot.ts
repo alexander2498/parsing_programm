@@ -4,11 +4,13 @@ import {TelegrafContext} from "telegraf/typings/context";
 import { PrismaClient } from '@prisma/client';
 import fs from "fs";
 
-
 const sortButtons = Markup.inlineKeyboard([
   Markup.callbackButton('По цене', 'by_price'),
   Markup.callbackButton('По рейтингу', 'by_rating'),
 ]).extra();
+const stepBackButton = Markup.keyboard(
+  ['Назад'],
+);
 
 const botToken: string = '6222679566:AAHI9ePcHAUu7nO88CCX8aVyvOzTPNv6YaY';
 
@@ -49,15 +51,17 @@ bot.start(async (ctx: TelegrafContext) => {
     salonNumber: -1
   })
 
-  //delete huyina
+  // globalSalons = Array.from(JSON.parse(await fs.promises.readFile('salons.json', 'utf8')));
+  // for (let i = 0; i < globalSalons.length; i++) {
+  //   globalSalons[i].districtId = globalSalons[i].districtId - 204;
+  // }
+  // console.log(globalSalons);
 
-  globalSalons = Array.from(JSON.parse(await fs.promises.readFile('salons.json', 'utf8')));
-  for (let i = 0; i < globalSalons.length; i++) {
-    globalSalons[i].districtId = globalSalons[i].districtId - 204;
-  }
-  console.log(globalSalons);
-  // stop deleting
+  await ctx.reply(message);
+});
 
+bot.help(async (ctx: TelegrafContext) => {
+  let message = ``;
   await ctx.reply(message);
 });
 
@@ -95,97 +99,81 @@ bot.on("message", async (ctx: TelegrafContext) => {
 
     await ctx.reply(message);
   }
-  else if (session.lastMessageType === 2){
+  else if (session.lastMessageType !== 2) {
+    if (session.lastMessageType === 3) {
+      const salonId = parseInt(ctx.message.text);
+      const session = await sessionManager.getSession(ctx);
+      let salon = await prisma.salons.findUnique({
+        where: {
+          id: salonId + 82
+        }
+      });
+
+      console.log(salon);
+
+      const priceString = salon?.price === 1000000 ? '-' : salon?.price;
+
+      let message = `Название: ${salon?.name}\nРейтинг: ${salon?.rating}/10\nЦена: ${priceString}\nАдрес: ${salon?.address}\nНомер телефона: ${salon?.phone}\nСайт: ${salon?.site}\n`;
+      session.salonNumber = salonId;
+
+      await sessionManager.saveSession(ctx, session);
+      await ctx.reply(message);
+    }
+  } else {
     const districtId = parseInt(ctx.message.text);
     const session = await sessionManager.getSession(ctx);
     let salons = await prisma.salons.findMany({
       where: {
-        districtId
-      }
+        districtId: districtId,
+      },
+
     });
 
-
-    //delete hyuina
-
-    salons = Array.from(JSON.parse(JSON.stringify(globalSalons)));
-
-    for (let i = 0; i < salons.length; i++) {
-      salons[i].id = i + 1;
-    }
-
-    salons=salons.filter((s: any) => {
+    salons = salons.filter((s: any) => {
       return s.districtId === districtId;
     });
 
-
-    //stop deleting hyina
+    const firstSalon = await prisma.salons.findFirst({
+      where: {
+        districtId: 1
+      }
+    });
 
     let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
     for (const salon of salons) {
-      message += `${salon.id}. ${salon.name}\n`;
+      message += `${salon.id - 82}. ${salon.name}\n`;
     }
     session.lastMessageType = 3;
     session.districtNumber = districtId;
     await sessionManager.saveSession(ctx, session);
     await ctx.reply(message, sortButtons);
   }
-  else if (session.lastMessageType === 3){
-    const salonId = parseInt(ctx.message.text);
-    const session = await sessionManager.getSession(ctx);
-    let salon = await prisma.salons.findUnique({
-      where: {
-        id: salonId
-      }
-    });
-
-    //delete hyuina
-
-    const salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
-    for (let i = 0; i < salons.length; i++) {
-      salons[i].id = i + 1;
-    }
-    salon = salons.find((s: any) => {
-      return s.id === salonId
-    });
-
-    console.log(salon);
-
-    //stop deleting hyina
-    const priceString = salon?.price === 1000000 ? '-' : salon?.price;
-
-    let message = `Название: ${salon?.name}\nРейтинг: ${salon?.rating}/10\nЦена: ${priceString}\nАдрес: ${salon?.address}\nНомер телефона: ${salon?.phone}\nСайт: ${salon?.site}\n`;
-    session.salonNumber = salonId;
-
-    await sessionManager.saveSession(ctx, session);
-    await ctx.reply(message);
-  }
 });
 
 bot.action('by_price', async (ctx: TelegrafContext) => {
   const session = await sessionManager.getSession(ctx);
-  // let salons = await prisma.salons.findMany({
-  //   where: {
-  //     districtId: session.districtNumber
-  //   }
-  // });
+  let salonsFiltered = await prisma.salons.findMany({
+    where: {
+      districtId: session.districtNumber
+    }
+  });
 
   //delete hyuina
 
-  let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
+  // let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
+  //
+  // for (let i = 0; i < salons.length; i++) {
+  //   salons[i].id = i + 1;
+  // }
+  //
+  // salons=salons.filter((s) => {
+  //   return s.districtId === session.districtNumber;
+  // });
 
-  for (let i = 0; i < salons.length; i++) {
-    salons[i].id = i + 1;
-  }
-
-  salons=salons.filter((s) => {
-    return s.districtId === session.districtNumber;
-  });
-  //stop deleting hyina
-
-  salons.sort((a: any, b: any) => b.price - a.price);
+  // salons.sort((a: any, b: any) => b.price - a.price);
 
   let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
-  for (const salon of salons) {
+  for (const salon of salonsFiltered) {
     message += `${salon.id}. ${salon.name}\n`;
   }
   session.lastMessageType = 3;
@@ -204,27 +192,28 @@ bot.action('by_rating', async (ctx: TelegrafContext) => {
 
   //delete hyuina
 
-  let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
-
-  for (let i = 0; i < salons.length; i++) {
-    salons[i].id = i + 1;
-  }
-
-  salons=salons.filter((s) => {
-    return s.districtId === session.districtNumber;
-  });
-  //stop deleting hyina
-
-  salons.sort((a: any, b: any) => b.rating - a.rating);
+  // let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
+  //
+  // for (let i = 0; i < salons.length; i++) {
+  //   salons[i].id = i + 1;
+  // }
+  //
+  // salons=salons.filter((s) => {
+  //   return s.districtId === session.districtNumber;
+  // });
+  // //stop deleting hyina
+  //
+  // salons.sort((a: any, b: any) => b.rating - a.rating);
 
   let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
-  for (const salon of salons) {
-    message += `${salon.id}. ${salon.name}\n`;
-  }
+  // for (const salon of salons) {
+  //   message += `${salon.id}. ${salon.name}\n`;
+  // }
   session.lastMessageType = 3;
 
   await sessionManager.saveSession(ctx, session);
   await ctx.reply(message, sortButtons);
+
 })
 
 

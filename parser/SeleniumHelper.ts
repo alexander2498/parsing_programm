@@ -21,9 +21,6 @@ export class SeleniumHelper {
       .windowSize({width: 1920, height: 1080})
       .addArguments('--headless');
 
-    // this.chromeOptions.addArguments('--proxy-server=103.156.248.102:8080');
-
-
     this.driver = new Builder()
       .forBrowser('chrome')
       .usingServer('http://109.172.80.51:4444/')
@@ -43,9 +40,9 @@ export class SeleniumHelper {
     try {
       url = this.baseUrl + url;
       await this._openUrl(url);
-
-      const newColumnBtn = this.driver.findElement(By.css('.checkBoxCostumize__button'));
+      const newColumnBtn = this.driver.findElement(By.css('.firmTableFilters__costumize.checkBoxCostumize'));
       await newColumnBtn.click();
+      await this._saveHtml('checkbox_problem.html');
 
       await this.driver.sleep(1000);
       await this.driver.findElement(By.css("[for='colSite-filterCol']")).click();
@@ -132,19 +129,7 @@ export class SeleniumHelper {
     const page = await this.driver.getPageSource();
     await fs.promises.writeFile(filename, page, 'utf8');
   }
-
-
 }
-
-
-const seleniumHelper = new SeleniumHelper();
-// seleniumHelper.prepareDistrictPage('/districts.php?district=19').then(() => {
-//   seleniumHelper.destruct();
-// });
-
-seleniumHelper.prepareDistrictPage('districts.php?district=62').then(() => {
-  seleniumHelper.destruct();
-});
 
 process.once('SIGINT', () => destructAllHelpers());
 process.once('SIGTERM', () => destructAllHelpers());
