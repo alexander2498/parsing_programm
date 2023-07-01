@@ -1,5 +1,6 @@
 import {TelegrafContext} from "telegraf/typings/context";
 import {PrismaClient} from "@prisma/client";
+
 export interface ISessionManagerOptions<ISession> {
   initSession: ISession,
 }
@@ -18,13 +19,6 @@ export class SessionManager<ISession> implements ISessionManager<ISession> {
   constructor(options: ISessionManagerOptions<ISession>) {
     this.initSession = options.initSession
     this.db = new PrismaClient();
-  }
-
-  private _getKeyByContext(ctx: TelegrafContext): string {
-    if (ctx.from) {
-      return (ctx.from.id).toString() + "_" + ctx.from.username;
-    }
-    return "";
   }
 
   public async getSession(ctx: TelegrafContext): Promise<ISession> {
@@ -46,5 +40,12 @@ export class SessionManager<ISession> implements ISessionManager<ISession> {
         data: JSON.stringify(session)
       }
     });
+  }
+
+  private _getKeyByContext(ctx: TelegrafContext): string {
+    if (ctx.from) {
+      return (ctx.from.id).toString() + "_" + ctx.from.username;
+    }
+    return "";
   }
 }

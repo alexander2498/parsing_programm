@@ -9,27 +9,31 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
 model areas {
-  id         Int @id @default(autoincrement())
-  name       String
+  id   Int    @id @default(autoincrement())
+  name String
 }
+
 model districts {
-  id         Int @id @default(autoincrement())
-  areaId     Int
+  id     Int    @id @default(autoincrement())
+  areaId Int
+  name   String
+  link   String
+}
+
+model salons {
+  id         Int    @id @default(autoincrement())
+  districtId Int
   name       String
   link       String
+  rating     Int
+  price      Int
+  address    String
+  phone      String
+  site       String
 }
-model salons {
-  id         Int @id @default(autoincrement())
-  districtId     Int
-  name           String
-  link           String
-  rating         Int
-  price          Int
-  address        String
-  phone          String
-  site           String
-}
+
 model Session {
   key  String @id
   data String

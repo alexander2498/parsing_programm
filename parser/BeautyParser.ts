@@ -1,7 +1,7 @@
 import {JSDOM} from 'jsdom';
 import axios from 'axios';
 
-import {PrismaClient, Prisma, districts} from '@prisma/client';
+import {districts, Prisma, PrismaClient} from '@prisma/client';
 import {destructAllHelpers, SeleniumHelper} from "./SeleniumHelper";
 import fs from "fs";
 
@@ -64,7 +64,7 @@ export class BeautyParser {
       return d1.id - d2.id;
     });
 
-    const salonsData:  Prisma.salonsCreateManyInput[] = [];
+    const salonsData: Prisma.salonsCreateManyInput[] = [];
     for (const district of districts) {
       this.seleniumHelper = new SeleniumHelper();
       const url = this.baseUrl + district.link;
@@ -113,12 +113,12 @@ export class BeautyParser {
         })
         console.log(salonLink, salonName, salonRating, salonRatingText, salonPrice, salonPriceText, salonAddress, salonPhone, salonSite);
         salonsData.push({
-          name: salonName ? salonName: "",
-          link: salonLink ? salonLink: "",
+          name: salonName ? salonName : "",
+          link: salonLink ? salonLink : "",
           rating: salonRating,
           price: salonPrice,
-          address: salonAddress? salonAddress: "",
-          phone: salonPhone? salonPhone: "",
+          address: salonAddress ? salonAddress : "",
+          phone: salonPhone ? salonPhone : "",
           site: salonSite,
           districtId: district.id
         } as Prisma.salonsCreateManyInput);

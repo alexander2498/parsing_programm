@@ -1,127 +1,119 @@
-import {Markup, Telegraf} from 'telegraf';
+import {Telegraf} from 'telegraf';
 import {ISessionManager, SessionManager} from "./utils/SessionManager";
 import {TelegrafContext} from "telegraf/typings/context";
-import { PrismaClient } from '@prisma/client';
-import fs from "fs";
+import {PrismaClient} from '@prisma/client';
+import {MessageCreator} from "./MessageCreator";
+import {sortButtons, stepBackButton} from "./views/buttons";
 
-const sortButtons = Markup.inlineKeyboard([
-  Markup.callbackButton('По цене', 'by_price'),
-  Markup.callbackButton('По рейтингу', 'by_rating'),
-]).extra();
-const stepBackButton = Markup.keyboard(
-  ['Назад'],
-);
 
 const botToken: string = '6222679566:AAHI9ePcHAUu7nO88CCX8aVyvOzTPNv6YaY';
 
 const prisma = new PrismaClient();
 
 // Init sessions
-export interface ISession{
+export interface ISession {
   areasNumber: number,
   districtNumber: number,
-  lastMessageType: number,
+  userState: number,
   salonNumber: number
 }
 
-export const initSession: ISession = {
-  areasNumber: -1,
-  districtNumber: -1,
-  lastMessageType: -1,
-  salonNumber: -1
-}
-export const sessionManager: ISessionManager<ISession> = new SessionManager<ISession>({
-  initSession,
-});
+class BeautyParserBot {
+  private readonly botToken: string;
+  private bot: Telegraf<TelegrafContext>;
+  private prisma: PrismaClient;
+  private sessionManager: ISessionManager<ISession>;
 
-const bot: Telegraf<TelegrafContext> = new Telegraf(botToken);
+  constructor(botToken: string) {
+    this.botToken = botToken;
+    this.bot = new Telegraf(this.botToken);
 
-let globalSalons: any = [];
+    this.prisma = new PrismaClient();
 
-bot.start(async (ctx: TelegrafContext) => {
-  const areas = await prisma.areas.findMany();
-  let message = `Добрый день! Выберите округ для поиска района. Для выбора напишите мне идентификатор находящийся около названия необходимого округа. \n`;
-  for (const area of areas) {
-    message += `${area.id}. ${area.name}\n`;
-  }
-  await sessionManager.saveSession(ctx, {
-    areasNumber: -1,
-    districtNumber: -1,
-    lastMessageType: 1,
-    salonNumber: -1
-  })
+    const initSession: ISession = {
+      areasNumber: -1,
+      districtNumber: -1,
+      userState: -1,
+      salonNumber: -1
+    }
 
-  // globalSalons = Array.from(JSON.parse(await fs.promises.readFile('salons.json', 'utf8')));
-  // for (let i = 0; i < globalSalons.length; i++) {
-  //   globalSalons[i].districtId = globalSalons[i].districtId - 204;
-  // }
-  // console.log(globalSalons);
+    this.sessionManager = new SessionManager<ISession>({
+      initSession
+    });
 
-  await ctx.reply(message);
-});
-
-bot.help(async (ctx: TelegrafContext) => {
-  let message = ``;
-  await ctx.reply(message);
-});
-
-bot.on("message", async (ctx: TelegrafContext) => {
-  if (!ctx.message) {
-    return;
   }
 
-  if (ctx.message.text[0]==='/') {
-    return;
+  public setHandlers() {
+    this.bot.start(async (ctx) =>
+      await this.answerState0(ctx));
+
+    this.bot.on('message', async (ctx) =>
+      await this.answerByState(ctx));
+
+    this.bot.action('by_price', async (ctx) =>
+      await this.answerSortedSalonsByPrice(ctx));
+    this.bot.action('by_rating', async (ctx) =>
+      await this.answerSortedSalonsByRating(ctx));
+
+    this.bot.action('back', async (ctx) =>
+      await this.go_back(ctx))
+
+    this.bot.launch()
   }
 
-  const session = await sessionManager.getSession(ctx);
+  public restructure() {
+    return this.bot.stop();
+  }
 
-  console.log(session);
+  private async answerState0(ctx: TelegrafContext) {
+    const areas = await prisma.areas.findMany();
+    const message = await MessageCreator.getMessageWithAreas(areas);
 
-  if (session.lastMessageType === 1){
-    const areaId = parseInt(ctx.message.text);
+    const session = await this.sessionManager.getSession(ctx);
+    session.userState = 1;
+    await this.sessionManager.saveSession(ctx, session);
+
+    await ctx.reply(message);
+  }
+
+  private async answerState1(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
+
+    let areaId = session.areasNumber
+    if (ctx.message && ctx.message.text[0] !== '/') {
+      areaId = parseInt(ctx.message.text);
+    }
+
     const districts = await prisma.districts.findMany({
       where: {
         areaId
       }
     });
-    let message = `Выберите район для поиска салона. Для выбора напишите мне идентификатор находящийся около названия необходимого района. \n`;
-    for (const district of districts) {
-      message += `${district.id}. ${district.name}\n`;
+
+    if (districts.length === 0) {
+      await ctx.reply(MessageCreator.getMessageForInvalidRequest());
+      return;
     }
 
-    await sessionManager.saveSession(ctx, {
-      areasNumber: areaId,
-      districtNumber: -1,
-      lastMessageType: 2,
-      salonNumber: -1
-    });
+    session.areasNumber = areaId;
+    session.userState = 2;
+    await this.sessionManager.saveSession(ctx, session);
 
-    await ctx.reply(message);
+
+    const message = await MessageCreator.getMessageWithDistricts(districts);
+    await ctx.reply(message, stepBackButton);
+
+
   }
-  else if (session.lastMessageType !== 2) {
-    if (session.lastMessageType === 3) {
-      const salonId = parseInt(ctx.message.text);
-      const session = await sessionManager.getSession(ctx);
-      let salon = await prisma.salons.findUnique({
-        where: {
-          id: salonId + 82
-        }
-      });
 
-      console.log(salon);
+  private async answerState2(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
+    let districtId = session.districtNumber;
 
-      const priceString = salon?.price === 1000000 ? '-' : salon?.price;
-
-      let message = `Название: ${salon?.name}\nРейтинг: ${salon?.rating}/10\nЦена: ${priceString}\nАдрес: ${salon?.address}\nНомер телефона: ${salon?.phone}\nСайт: ${salon?.site}\n`;
-      session.salonNumber = salonId;
-
-      await sessionManager.saveSession(ctx, session);
-      await ctx.reply(message);
+    if (ctx.message && ctx.message.text[0] !== '/') {
+      districtId = parseInt(ctx.message.text);
     }
-  } else {
-    const districtId = parseInt(ctx.message.text);
-    const session = await sessionManager.getSession(ctx);
+
     let salons = await prisma.salons.findMany({
       where: {
         districtId: districtId,
@@ -133,91 +125,106 @@ bot.on("message", async (ctx: TelegrafContext) => {
       return s.districtId === districtId;
     });
 
-    const firstSalon = await prisma.salons.findFirst({
+    session.userState = 3;
+    session.districtNumber = districtId;
+    await this.sessionManager.saveSession(ctx, session);
+
+    await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
+  }
+
+  private async answerState3(ctx: TelegrafContext) {
+    if (!ctx.message) {
+      return;
+    }
+
+    if (ctx.message.text[0] === '/') {
+      return;
+    }
+
+    const salonId = parseInt(ctx.message.text);
+    const session = await this.sessionManager.getSession(ctx);
+
+    let salon = await prisma.salons.findUnique({
       where: {
-        districtId: 1
+        id: salonId + 82
       }
     });
 
-    let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
-    for (const salon of salons) {
-      message += `${salon.id - 82}. ${salon.name}\n`;
-    }
-    session.lastMessageType = 3;
-    session.districtNumber = districtId;
-    await sessionManager.saveSession(ctx, session);
-    await ctx.reply(message, sortButtons);
+    session.salonNumber = salonId;
+    await this.sessionManager.saveSession(ctx, session);
+
+    await ctx.reply(await MessageCreator.getMessageWithSalonInfo(salon), stepBackButton);
   }
-});
 
-bot.action('by_price', async (ctx: TelegrafContext) => {
-  const session = await sessionManager.getSession(ctx);
-  let salonsFiltered = await prisma.salons.findMany({
-    where: {
-      districtId: session.districtNumber
-    }
-  });
+  private async answerSortedSalonsByPrice(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
+    let salons = await prisma.salons.findMany({
+      where: {
+        districtId: session.districtNumber
+      }
+    });
 
-  //delete hyuina
+    salons.sort((a: any, b: any) => {
+      return a.price - b.price;
+    });
 
-  // let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
-  //
-  // for (let i = 0; i < salons.length; i++) {
-  //   salons[i].id = i + 1;
-  // }
-  //
-  // salons=salons.filter((s) => {
-  //   return s.districtId === session.districtNumber;
-  // });
+    await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
+    session.userState = 3;
 
-  // salons.sort((a: any, b: any) => b.price - a.price);
-
-  let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
-  for (const salon of salonsFiltered) {
-    message += `${salon.id}. ${salon.name}\n`;
+    await this.sessionManager.saveSession(ctx, session);
   }
-  session.lastMessageType = 3;
 
-  await sessionManager.saveSession(ctx, session);
-  await ctx.reply(message, sortButtons);
-});
+  private async answerSortedSalonsByRating(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
 
-bot.action('by_rating', async (ctx: TelegrafContext) => {
-  const session = await sessionManager.getSession(ctx);
-  // let salons = await prisma.salons.findMany({
-  //   where: {
-  //     districtId: session.districtNumber
-  //   }
-  // });
+    let salons = await prisma.salons.findMany({
+      where: {
+        districtId: session.districtNumber
+      }
+    });
 
-  //delete hyuina
+    salons.sort((a: any, b: any) => b.rating - a.rating);
 
-  // let salons: any[] = Array.from(JSON.parse(JSON.stringify(globalSalons)));
-  //
-  // for (let i = 0; i < salons.length; i++) {
-  //   salons[i].id = i + 1;
-  // }
-  //
-  // salons=salons.filter((s) => {
-  //   return s.districtId === session.districtNumber;
-  // });
-  // //stop deleting hyina
-  //
-  // salons.sort((a: any, b: any) => b.rating - a.rating);
-
-  let message = `Выберите салон о котором хотите узнать. Для выбора напишите мне идентификатор находящийся около названия необходимого салона. \n`;
-  // for (const salon of salons) {
-  //   message += `${salon.id}. ${salon.name}\n`;
-  // }
-  session.lastMessageType = 3;
-
-  await sessionManager.saveSession(ctx, session);
-  await ctx.reply(message, sortButtons);
-
-})
+    await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
 
 
-bot.launch()
+    session.userState = 3;
+    await this.sessionManager.saveSession(ctx, session);
+  }
 
-process.once('SIGINT', () => bot.stop());
-process.once('SIGTERM', () => bot.stop());
+  private async answerByState(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
+    console.log('Start answering by state with state = ', session.userState);
+    if (session.userState === 0) {
+      await this.answerState0(ctx);
+    } else if (session.userState === 1) {
+      await this.answerState1(ctx);
+    } else if (session.userState === 2) {
+      await this.answerState2(ctx);
+    } else if (session.userState === 3) {
+      await this.answerState3(ctx);
+    }
+  }
+
+  private async go_back(ctx: TelegrafContext) {
+    console.log('Start going back');
+
+    const session = await this.sessionManager.getSession(ctx);
+    console.log('Current userState: ', session.userState);
+
+    if (session.userState > 1) session.userState -= 2;
+    await this.sessionManager.saveSession(ctx, session);
+
+    console.log('Current userState: ', session.userState);
+
+    await this.answerByState(ctx);
+  }
+
+}
+
+const bot = new BeautyParserBot(botToken);
+bot.setHandlers();
+
+
+process.once('SIGINT', () => bot.restructure());
+process.once('SIGTERM', () => bot.restructure());
