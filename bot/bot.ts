@@ -6,7 +6,7 @@ import {MessageCreator} from "./MessageCreator";
 import {sortButtons, startButton, stepBackButton} from "./views/buttons";
 
 
-const botToken: string = '6073480961:AAEO81LcCTWzEJ7b-QcEZH3W6jOT17IW_Tw';
+const botToken: string = '6628382472:AAFBJaVDoVSPg8sI5Hk1Bkltq2Pg_i8d4ho';
 
 const prisma = new PrismaClient();
 
