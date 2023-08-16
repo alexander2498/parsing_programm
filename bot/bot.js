@@ -14,7 +14,7 @@ const SessionManager_1 = require("./utils/SessionManager");
 const client_1 = require("@prisma/client");
 const MessageCreator_1 = require("./MessageCreator");
 const buttons_1 = require("./views/buttons");
-const botToken = '6073480961:AAEO81LcCTWzEJ7b-QcEZH3W6jOT17IW_Tw';
+const botToken = '6628382472:AAFBJaVDoVSPg8sI5Hk1Bkltq2Pg_i8d4ho';
 const prisma = new client_1.PrismaClient();
 class BeautyParserBot {
     constructor(botToken) {
