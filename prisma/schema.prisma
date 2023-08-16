@@ -10,31 +10,54 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model areas {
-  id   Int    @id @default(autoincrement())
-  name String
+model Area {
+  id        Int        @id @default(autoincrement())
+  name      String
+  districts District[]
+
+  @@map("areas")
 }
 
-model districts {
-  id     Int    @id @default(autoincrement())
-  areaId Int
+model District {
+  id     Int     @id @default(autoincrement())
   name   String
   link   String
+  area   Area    @relation(fields: [areaId], references: [id])
+  areaId Int
+  salons Salon[]
+
+  @@map("districts")
 }
 
-model salons {
-  id         Int    @id @default(autoincrement())
+model Salon {
+  id         Int      @id @default(autoincrement())
+  district   District @relation(fields: [districtId], references: [id])
   districtId Int
   name       String
   link       String
   rating     Int
-  price      Int
+  price      String
   address    String
   phone      String
   site       String
+  metro      Metro    @relation(fields: [metroId], references: [id])
+  metroId    Int
+
+  @@map("salons")
 }
 
 model Session {
   key  String @id
   data String
+
+  @@map("sessions")
+}
+
+model Metro {
+  id     Int     @id @default(autoincrement())
+  name   String
+  link   String
+  salons Salon[]
+
+  @@map("metros")
 }

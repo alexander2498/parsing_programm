@@ -7,7 +7,6 @@ export interface ISessionManagerOptions<ISession> {
 
 export interface ISessionManager<ISession> {
   getSession: (ctx: TelegrafContext) => Promise<ISession>
-
   saveSession: (ctx: TelegrafContext, session: ISession) => Promise<void>
 }
 

@@ -3,19 +3,19 @@ import {ISessionManager, SessionManager} from "./utils/SessionManager";
 import {TelegrafContext} from "telegraf/typings/context";
 import {PrismaClient} from '@prisma/client';
 import {MessageCreator} from "./MessageCreator";
-import {sortButtons, stepBackButton} from "./views/buttons";
+import {sortButtons, startButton, stepBackButton} from "./views/buttons";
 
 
-const botToken: string = '6628382472:AAFBJaVDoVSPg8sI5Hk1Bkltq2Pg_i8d4ho';
+const botToken: string = '6073480961:AAEO81LcCTWzEJ7b-QcEZH3W6jOT17IW_Tw';
 
 const prisma = new PrismaClient();
 
-// Init sessions
 export interface ISession {
   areasNumber: number,
   districtNumber: number,
   userState: number,
   salonNumber: number
+  metroNumber: number
 }
 
 class BeautyParserBot {
@@ -23,6 +23,7 @@ class BeautyParserBot {
   private bot: Telegraf<TelegrafContext>;
   private prisma: PrismaClient;
   private sessionManager: ISessionManager<ISession>;
+
 
   constructor(botToken: string) {
     this.botToken = botToken;
@@ -34,7 +35,8 @@ class BeautyParserBot {
       areasNumber: -1,
       districtNumber: -1,
       userState: -1,
-      salonNumber: -1
+      salonNumber: -1,
+      metroNumber: -1
     }
 
     this.sessionManager = new SessionManager<ISession>({
@@ -43,41 +45,52 @@ class BeautyParserBot {
 
   }
 
+
   public setHandlers() {
-    this.bot.start(async (ctx) =>
-      await this.answerState0(ctx));
-    this.bot.help(async (ctx: TelegrafContext) => {
-      let message = `Здравствуйте! В этом боте собраны все самые лучшие салоны красоты в Москве.\nКак это работает?\nПри запуске (команда /start) бот присылает список округов с нумерацией, для того чтобы перейти к нужному округу, нужно просто отправить ответным сообщением номер этого округа. Таким же образом происходит дальнейшее взаимодействие. Если вам нужно вернуться к выбору района или округа, просто воспользуйтесь кнопкой "Назад". Также вы всегда можете запустить бота заново, для этого воспользуйтесь командой /start.`;
-      await ctx.reply(message);
-    });
+    try {
+      this.bot.start(async (ctx) =>
+        await this.answerState0(ctx));
+      this.bot.help(async (ctx: TelegrafContext) => {
+        let message = `Здравствуйте! В этом боте собраны все самые лучшие салоны красоты в Москве.\nКак это работает?\nПри запуске (команда /start) бот присылает список округов с нумерацией, для того чтобы перейти к нужному округу, нужно просто отправить ответным сообщением номер этого округа. Таким же образом происходит дальнейшее взаимодействие. Если вам нужно вернуться к выбору района или округа, просто воспользуйтесь кнопкой "Назад". Также вы всегда можете запустить бота заново, для этого воспользуйтесь командой /start.`;
+        await ctx.reply(message);
+      });
 
-    this.bot.on('message', async (ctx) =>
-      await this.answerByState(ctx));
+      this.bot.on('message', async (ctx) =>
+        await this.answerByState(ctx));
 
-    this.bot.action('by_price', async (ctx) =>
-      await this.answerSortedSalonsByPrice(ctx));
-    this.bot.action('by_rating', async (ctx) =>
-      await this.answerSortedSalonsByRating(ctx));
+      this.bot.action('by_price', async (ctx) =>
+        await this.answerSortedSalonsByPrice(ctx));
+      this.bot.action('by_rating', async (ctx) =>
+        await this.answerSortedSalonsByRating(ctx));
 
-    this.bot.action('back', async (ctx) =>
-      await this.go_back(ctx))
+      this.bot.action('back', async (ctx) =>
+        await this.go_back(ctx))
 
-    this.bot.launch()
+      this.bot.action('metros_125', async (ctx) =>
+        await this.answerMetroButton125(ctx))
+      this.bot.action('metros_251', async (ctx) =>
+        await this.answerMetroButton251(ctx))
+      this.bot.launch()
+    }
+    catch (e) {
+      console.log("error:", e)
+    }
   }
+
 
   public restructure() {
     return this.bot.stop();
   }
 
   private async answerState0(ctx: TelegrafContext) {
-    const areas = await prisma.areas.findMany();
+    const areas = await prisma.area.findMany();
     const message = await MessageCreator.getMessageWithAreas(areas);
 
     const session = await this.sessionManager.getSession(ctx);
     session.userState = 1;
     await this.sessionManager.saveSession(ctx, session);
 
-    await ctx.reply(message);
+    await ctx.reply(message, startButton);
   }
 
   private async answerState1(ctx: TelegrafContext) {
@@ -88,7 +101,7 @@ class BeautyParserBot {
       areaId = parseInt(ctx.message.text);
     }
 
-    const districts = await prisma.districts.findMany({
+    const districts = await prisma.district.findMany({
       where: {
         areaId
       }
@@ -106,8 +119,6 @@ class BeautyParserBot {
 
     const message = await MessageCreator.getMessageWithDistricts(districts);
     await ctx.reply(message, stepBackButton);
-
-
   }
 
   private async answerState2(ctx: TelegrafContext) {
@@ -118,11 +129,10 @@ class BeautyParserBot {
       districtId = parseInt(ctx.message.text);
     }
 
-    let salons = await prisma.salons.findMany({
+    let salons = await prisma.salon.findMany({
       where: {
         districtId: districtId,
-      },
-
+      }
     });
 
     salons = salons.filter((s: any) => {
@@ -136,6 +146,8 @@ class BeautyParserBot {
     await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
   }
 
+
+
   private async answerState3(ctx: TelegrafContext) {
     if (!ctx.message) {
       return;
@@ -148,9 +160,9 @@ class BeautyParserBot {
     const salonId = parseInt(ctx.message.text);
     const session = await this.sessionManager.getSession(ctx);
 
-    let salon = await prisma.salons.findUnique({
+    let salon = await prisma.salon.findUnique({
       where: {
-        id: salonId + 82
+        id: salonId
       }
     });
 
@@ -160,9 +172,36 @@ class BeautyParserBot {
     await ctx.reply(await MessageCreator.getMessageWithSalonInfo(salon), stepBackButton);
   }
 
+  private async answerState4(ctx: TelegrafContext) {
+    if (!ctx.message) {
+      return;
+    }
+
+    if (ctx.message.text[0] === '/') {
+      return;
+    }
+    const session = await this.sessionManager.getSession(ctx);
+    const metroId = parseInt(ctx.message.text);
+    let salons = await prisma.salon.findMany({
+      where: {
+        metroId: metroId
+      }
+    });
+
+    salons = salons.filter((s: any) => {
+      return s.metroId === metroId;
+    });
+
+    session.userState = 3;
+    session.metroNumber = metroId;
+    await this.sessionManager.saveSession(ctx, session);
+
+    await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
+  }
+
   private async answerSortedSalonsByPrice(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
-    let salons = await prisma.salons.findMany({
+    let salons = await prisma.salon.findMany({
       where: {
         districtId: session.districtNumber
       }
@@ -181,7 +220,7 @@ class BeautyParserBot {
   private async answerSortedSalonsByRating(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
 
-    let salons = await prisma.salons.findMany({
+    let salons = await prisma.salon.findMany({
       where: {
         districtId: session.districtNumber
       }
@@ -196,6 +235,25 @@ class BeautyParserBot {
     await this.sessionManager.saveSession(ctx, session);
   }
 
+  private async answerMetroButton125(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
+
+    let metros = await prisma.metro.findMany();
+
+    await ctx.reply(await MessageCreator.getMessageWithMetros(metros, 125), stepBackButton);
+    session.userState = 4;
+    await this.sessionManager.saveSession(ctx, session)
+  }
+  private async answerMetroButton251(ctx: TelegrafContext) {
+    const session = await this.sessionManager.getSession(ctx);
+
+    let metros = await prisma.metro.findMany();
+
+    await ctx.reply(await MessageCreator.getMessageWithMetros(metros, 251), stepBackButton);
+    session.userState = 4;
+    await this.sessionManager.saveSession(ctx, session)
+  }
+
   private async answerByState(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
     console.log('Start answering by state with state = ', session.userState);
@@ -207,6 +265,9 @@ class BeautyParserBot {
       await this.answerState2(ctx);
     } else if (session.userState === 3) {
       await this.answerState3(ctx);
+    }
+    else if (session.userState === 4) {
+      await this.answerState4(ctx);
     }
   }
 
@@ -223,8 +284,8 @@ class BeautyParserBot {
 
     await this.answerByState(ctx);
   }
-
 }
+
 
 const bot = new BeautyParserBot(botToken);
 bot.setHandlers();

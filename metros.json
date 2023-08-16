@@ -1,0 +1,1262 @@
+[
+  {
+    "id": 1,
+    "name": "Авиамоторная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=62"
+  },
+  {
+    "id": 2,
+    "name": "Автозаводская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=63"
+  },
+  {
+    "id": 3,
+    "name": "Академическая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=64"
+  },
+  {
+    "id": 4,
+    "name": "Александровский Сад",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=65"
+  },
+  {
+    "id": 5,
+    "name": "Алексеевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=66"
+  },
+  {
+    "id": 6,
+    "name": "Алма-Атинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=310"
+  },
+  {
+    "id": 7,
+    "name": "Алтуфьево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=67"
+  },
+  {
+    "id": 8,
+    "name": "Аминьевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=397"
+  },
+  {
+    "id": 9,
+    "name": "Андроновка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=321"
+  },
+  {
+    "id": 10,
+    "name": "Аннино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=68"
+  },
+  {
+    "id": 11,
+    "name": "Арбатская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=69"
+  },
+  {
+    "id": 12,
+    "name": "Аэропорт",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=70"
+  },
+  {
+    "id": 13,
+    "name": "Бабушкинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=71"
+  },
+  {
+    "id": 14,
+    "name": "Багратионовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=72"
+  },
+  {
+    "id": 15,
+    "name": "Балтийская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=322"
+  },
+  {
+    "id": 16,
+    "name": "Баррикадная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=73"
+  },
+  {
+    "id": 17,
+    "name": "Бауманская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=74"
+  },
+  {
+    "id": 18,
+    "name": "Беговая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=75"
+  },
+  {
+    "id": 19,
+    "name": "Белокаменная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=323"
+  },
+  {
+    "id": 20,
+    "name": "Беломорская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=370"
+  },
+  {
+    "id": 21,
+    "name": "Белорусская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=76"
+  },
+  {
+    "id": 22,
+    "name": "Беляево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=77"
+  },
+  {
+    "id": 23,
+    "name": "Бибирево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=78"
+  },
+  {
+    "id": 24,
+    "name": "Библиотека им. Ленина",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=79"
+  },
+  {
+    "id": 25,
+    "name": "Битцевский парк",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=246"
+  },
+  {
+    "id": 26,
+    "name": "Борисово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=80"
+  },
+  {
+    "id": 27,
+    "name": "Боровицкая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=81"
+  },
+  {
+    "id": 28,
+    "name": "Боровское шоссе",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=373"
+  },
+  {
+    "id": 29,
+    "name": "Ботанический Сад",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=82"
+  },
+  {
+    "id": 30,
+    "name": "Братеево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=83"
+  },
+  {
+    "id": 31,
+    "name": "Братиславская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=84"
+  },
+  {
+    "id": 32,
+    "name": "Бульвар Адмирала Ушакова",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=85"
+  },
+  {
+    "id": 33,
+    "name": "Бульвар Дмитрия Донского",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=86"
+  },
+  {
+    "id": 34,
+    "name": "Бульвар Рокоссовского",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=209"
+  },
+  {
+    "id": 35,
+    "name": "Бунинская Аллея",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=87"
+  },
+  {
+    "id": 36,
+    "name": "Бутырская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=316"
+  },
+  {
+    "id": 37,
+    "name": "Варшавская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=89"
+  },
+  {
+    "id": 38,
+    "name": "ВДНХ",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=88"
+  },
+  {
+    "id": 39,
+    "name": "Верхние котлы",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=325"
+  },
+  {
+    "id": 40,
+    "name": "Верхние Лихоборы",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=324"
+  },
+  {
+    "id": 41,
+    "name": "Владыкино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=90"
+  },
+  {
+    "id": 42,
+    "name": "Водный Стадион",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=91"
+  },
+  {
+    "id": 43,
+    "name": "Войковская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=92"
+  },
+  {
+    "id": 44,
+    "name": "Волгоградский Проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=93"
+  },
+  {
+    "id": 45,
+    "name": "Волжская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=94"
+  },
+  {
+    "id": 46,
+    "name": "Волоколамская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=95"
+  },
+  {
+    "id": 47,
+    "name": "Воробьевы Горы",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=96"
+  },
+  {
+    "id": 48,
+    "name": "Воронцовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=400"
+  },
+  {
+    "id": 49,
+    "name": "Выставочная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=97"
+  },
+  {
+    "id": 50,
+    "name": "Выставочный Центр",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=98"
+  },
+  {
+    "id": 51,
+    "name": "Выхино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=99"
+  },
+  {
+    "id": 52,
+    "name": "Говорово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=375"
+  },
+  {
+    "id": 53,
+    "name": "Давыдково",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=396"
+  },
+  {
+    "id": 54,
+    "name": "Деловой центр",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=244"
+  },
+  {
+    "id": 55,
+    "name": "Динамо",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=100"
+  },
+  {
+    "id": 56,
+    "name": "Дмитровская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=101"
+  },
+  {
+    "id": 57,
+    "name": "Добрынинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=102"
+  },
+  {
+    "id": 58,
+    "name": "Домодедовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=103"
+  },
+  {
+    "id": 59,
+    "name": "Достоевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=104"
+  },
+  {
+    "id": 60,
+    "name": "Дубровка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=105"
+  },
+  {
+    "id": 61,
+    "name": "Жулебино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=247"
+  },
+  {
+    "id": 62,
+    "name": "ЗИЛ",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=326"
+  },
+  {
+    "id": 63,
+    "name": "Зорге",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=327"
+  },
+  {
+    "id": 64,
+    "name": "Зюзино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=401"
+  },
+  {
+    "id": 65,
+    "name": "Зябликово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=106"
+  },
+  {
+    "id": 66,
+    "name": "Измайлово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=328"
+  },
+  {
+    "id": 67,
+    "name": "Измайловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=107"
+  },
+  {
+    "id": 68,
+    "name": "Калужская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=108"
+  },
+  {
+    "id": 69,
+    "name": "Кантемировская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=109"
+  },
+  {
+    "id": 70,
+    "name": "Каховская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=110"
+  },
+  {
+    "id": 71,
+    "name": "Каширская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=111"
+  },
+  {
+    "id": 72,
+    "name": "Киевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=112"
+  },
+  {
+    "id": 73,
+    "name": "Китай-город",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=113"
+  },
+  {
+    "id": 74,
+    "name": "Кленовый бульвар",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=402"
+  },
+  {
+    "id": 75,
+    "name": "Кожуховская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=114"
+  },
+  {
+    "id": 76,
+    "name": "Коломенская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=115"
+  },
+  {
+    "id": 77,
+    "name": "Коммунарка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=388"
+  },
+  {
+    "id": 78,
+    "name": "Комсомольская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=116"
+  },
+  {
+    "id": 79,
+    "name": "Коньково",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=117"
+  },
+  {
+    "id": 80,
+    "name": "Коптево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=329"
+  },
+  {
+    "id": 81,
+    "name": "Косино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=389"
+  },
+  {
+    "id": 82,
+    "name": "Котельники",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=249"
+  },
+  {
+    "id": 83,
+    "name": "Красногвардейская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=118"
+  },
+  {
+    "id": 84,
+    "name": "Краснопресненская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=119"
+  },
+  {
+    "id": 85,
+    "name": "Красносельская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=120"
+  },
+  {
+    "id": 86,
+    "name": "Красные Ворота",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=121"
+  },
+  {
+    "id": 87,
+    "name": "Крестьянская Застава",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=122"
+  },
+  {
+    "id": 88,
+    "name": "Кропоткинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=123"
+  },
+  {
+    "id": 89,
+    "name": "Крылатское",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=124"
+  },
+  {
+    "id": 90,
+    "name": "Крымская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=330"
+  },
+  {
+    "id": 91,
+    "name": "Кузнецкий Мост",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=125"
+  },
+  {
+    "id": 92,
+    "name": "Кузьминки",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=126"
+  },
+  {
+    "id": 93,
+    "name": "Кунцевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=127"
+  },
+  {
+    "id": 94,
+    "name": "Курская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=128"
+  },
+  {
+    "id": 95,
+    "name": "Кутузовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=129"
+  },
+  {
+    "id": 96,
+    "name": "Ленинский Проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=130"
+  },
+  {
+    "id": 97,
+    "name": "Лермонтовский проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=242"
+  },
+  {
+    "id": 98,
+    "name": "Лесопарковая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=250"
+  },
+  {
+    "id": 99,
+    "name": "Лефортово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=404"
+  },
+  {
+    "id": 100,
+    "name": "Лихоборы",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=331"
+  },
+  {
+    "id": 101,
+    "name": "Локомотив",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=332"
+  },
+  {
+    "id": 102,
+    "name": "Ломоносовский проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=314"
+  },
+  {
+    "id": 103,
+    "name": "Лубянка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=131"
+  },
+  {
+    "id": 104,
+    "name": "Лужники",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=333"
+  },
+  {
+    "id": 105,
+    "name": "Лухмановская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=391"
+  },
+  {
+    "id": 106,
+    "name": "Люблино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=132"
+  },
+  {
+    "id": 107,
+    "name": "Марксистская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=133"
+  },
+  {
+    "id": 108,
+    "name": "Марьина Роща",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=134"
+  },
+  {
+    "id": 109,
+    "name": "Марьино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=135"
+  },
+  {
+    "id": 110,
+    "name": "Маяковская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=136"
+  },
+  {
+    "id": 111,
+    "name": "Медведково",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=137"
+  },
+  {
+    "id": 112,
+    "name": "Международная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=138"
+  },
+  {
+    "id": 113,
+    "name": "Менделеевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=139"
+  },
+  {
+    "id": 114,
+    "name": "Минская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=315"
+  },
+  {
+    "id": 115,
+    "name": "Митино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=140"
+  },
+  {
+    "id": 116,
+    "name": "Мичуринский проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=377"
+  },
+  {
+    "id": 117,
+    "name": "Мнёвники",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=394"
+  },
+  {
+    "id": 118,
+    "name": "Молодежная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=141"
+  },
+  {
+    "id": 119,
+    "name": "Мякинино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=312"
+  },
+  {
+    "id": 120,
+    "name": "Нагатинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=142"
+  },
+  {
+    "id": 121,
+    "name": "Нагатинский Затон",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=403"
+  },
+  {
+    "id": 122,
+    "name": "Нагорная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=143"
+  },
+  {
+    "id": 123,
+    "name": "Народное Ополчение",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=393"
+  },
+  {
+    "id": 124,
+    "name": "Нахимовский Проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=144"
+  },
+  {
+    "id": 125,
+    "name": "Некрасовка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=392"
+  },
+  {
+    "id": 126,
+    "name": "Нижегородская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=334"
+  },
+  {
+    "id": 127,
+    "name": "Новаторская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=399"
+  },
+  {
+    "id": 128,
+    "name": "Новогиреево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=145"
+  },
+  {
+    "id": 129,
+    "name": "Новокосино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=243"
+  },
+  {
+    "id": 130,
+    "name": "Новокузнецкая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=146"
+  },
+  {
+    "id": 131,
+    "name": "Новопеределкино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=372"
+  },
+  {
+    "id": 132,
+    "name": "Новослободская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=147"
+  },
+  {
+    "id": 133,
+    "name": "Новохохловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=335"
+  },
+  {
+    "id": 134,
+    "name": "Новоясеневская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=148"
+  },
+  {
+    "id": 135,
+    "name": "Новые Черемушки",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=149"
+  },
+  {
+    "id": 136,
+    "name": "Озерная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=376"
+  },
+  {
+    "id": 137,
+    "name": "Окружная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=336"
+  },
+  {
+    "id": 138,
+    "name": "Октябрьская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=150"
+  },
+  {
+    "id": 139,
+    "name": "Октябрьское Поле",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=151"
+  },
+  {
+    "id": 140,
+    "name": "Ольховая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=387"
+  },
+  {
+    "id": 141,
+    "name": "Орехово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=152"
+  },
+  {
+    "id": 142,
+    "name": "Отрадное",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=153"
+  },
+  {
+    "id": 143,
+    "name": "Охотный Ряд",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=154"
+  },
+  {
+    "id": 144,
+    "name": "Павелецкая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=155"
+  },
+  {
+    "id": 145,
+    "name": "Панфиловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=338"
+  },
+  {
+    "id": 146,
+    "name": "Парк Культуры",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=156"
+  },
+  {
+    "id": 147,
+    "name": "Парк Победы",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=157"
+  },
+  {
+    "id": 148,
+    "name": "Партизанская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=158"
+  },
+  {
+    "id": 149,
+    "name": "Первомайская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=159"
+  },
+  {
+    "id": 150,
+    "name": "Перово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=160"
+  },
+  {
+    "id": 151,
+    "name": "Петровский Парк",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=339"
+  },
+  {
+    "id": 152,
+    "name": "Петровско-Разумовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=161"
+  },
+  {
+    "id": 153,
+    "name": "Печатники",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=162"
+  },
+  {
+    "id": 154,
+    "name": "Пионерская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=163"
+  },
+  {
+    "id": 155,
+    "name": "Планерная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=164"
+  },
+  {
+    "id": 156,
+    "name": "Площадь Гагарина",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=340"
+  },
+  {
+    "id": 157,
+    "name": "Площадь Ильича",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=165"
+  },
+  {
+    "id": 158,
+    "name": "Площадь Революции",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=166"
+  },
+  {
+    "id": 159,
+    "name": "Полежаевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=168"
+  },
+  {
+    "id": 160,
+    "name": "Полянка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=169"
+  },
+  {
+    "id": 161,
+    "name": "Пражская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=170"
+  },
+  {
+    "id": 162,
+    "name": "Преображенская Площадь",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=171"
+  },
+  {
+    "id": 163,
+    "name": "Прокшино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=386"
+  },
+  {
+    "id": 164,
+    "name": "Пролетарская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=172"
+  },
+  {
+    "id": 165,
+    "name": "Проспект Вернадского",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=173"
+  },
+  {
+    "id": 166,
+    "name": "Проспект Мира",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=174"
+  },
+  {
+    "id": 167,
+    "name": "Профсоюзная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=175"
+  },
+  {
+    "id": 168,
+    "name": "Пушкинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=176"
+  },
+  {
+    "id": 169,
+    "name": "Пятницкое шоссе",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=311"
+  },
+  {
+    "id": 170,
+    "name": "Раменки",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=317"
+  },
+  {
+    "id": 171,
+    "name": "Рассказовка",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=371"
+  },
+  {
+    "id": 172,
+    "name": "Речной вокзал",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=177"
+  },
+  {
+    "id": 173,
+    "name": "Рижская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=178"
+  },
+  {
+    "id": 174,
+    "name": "Римская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=179"
+  },
+  {
+    "id": 175,
+    "name": "Ростокино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=341"
+  },
+  {
+    "id": 176,
+    "name": "Румянцево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=307"
+  },
+  {
+    "id": 177,
+    "name": "Рязанский Проспект",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=180"
+  },
+  {
+    "id": 178,
+    "name": "Савеловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=181"
+  },
+  {
+    "id": 179,
+    "name": "Саларьево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=308"
+  },
+  {
+    "id": 180,
+    "name": "Свиблово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=182"
+  },
+  {
+    "id": 181,
+    "name": "Севастопольская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=183"
+  },
+  {
+    "id": 182,
+    "name": "Селигерская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=342"
+  },
+  {
+    "id": 183,
+    "name": "Семеновская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=184"
+  },
+  {
+    "id": 184,
+    "name": "Серпуховская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=185"
+  },
+  {
+    "id": 185,
+    "name": "Славянский бульвар",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=186"
+  },
+  {
+    "id": 186,
+    "name": "Смоленская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=187"
+  },
+  {
+    "id": 187,
+    "name": "Сокол",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=188"
+  },
+  {
+    "id": 188,
+    "name": "Соколиная гора",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=343"
+  },
+  {
+    "id": 189,
+    "name": "Сокольники",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=189"
+  },
+  {
+    "id": 190,
+    "name": "Солнцево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=374"
+  },
+  {
+    "id": 191,
+    "name": "Спартак",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=313"
+  },
+  {
+    "id": 192,
+    "name": "Спортивная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=190"
+  },
+  {
+    "id": 193,
+    "name": "Сретенский Бульвар",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=191"
+  },
+  {
+    "id": 194,
+    "name": "Стрешнево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=344"
+  },
+  {
+    "id": 195,
+    "name": "Строгино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=193"
+  },
+  {
+    "id": 196,
+    "name": "Студенческая",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=194"
+  },
+  {
+    "id": 197,
+    "name": "Суворовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=167"
+  },
+  {
+    "id": 198,
+    "name": "Сухаревская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=195"
+  },
+  {
+    "id": 199,
+    "name": "Сходненская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=196"
+  },
+  {
+    "id": 200,
+    "name": "Таганская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=197"
+  },
+  {
+    "id": 201,
+    "name": "Тверская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=198"
+  },
+  {
+    "id": 202,
+    "name": "Театральная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=199"
+  },
+  {
+    "id": 203,
+    "name": "Текстильщики",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=200"
+  },
+  {
+    "id": 204,
+    "name": "Телецентр",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=201"
+  },
+  {
+    "id": 205,
+    "name": "Теплый Стан",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=202"
+  },
+  {
+    "id": 206,
+    "name": "Терехово",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=395"
+  },
+  {
+    "id": 207,
+    "name": "Технопарк",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=309"
+  },
+  {
+    "id": 208,
+    "name": "Тимирязевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=203"
+  },
+  {
+    "id": 209,
+    "name": "Третьяковская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=204"
+  },
+  {
+    "id": 210,
+    "name": "Тропарево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=248"
+  },
+  {
+    "id": 211,
+    "name": "Трубная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=205"
+  },
+  {
+    "id": 212,
+    "name": "Тульская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=206"
+  },
+  {
+    "id": 213,
+    "name": "Тургеневская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=207"
+  },
+  {
+    "id": 214,
+    "name": "Тушинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=208"
+  },
+  {
+    "id": 215,
+    "name": "Угрешская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=345"
+  },
+  {
+    "id": 216,
+    "name": "Улица 1905 года",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=210"
+  },
+  {
+    "id": 217,
+    "name": "Улица Академика Королева",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=211"
+  },
+  {
+    "id": 218,
+    "name": "Улица Академика Янгеля",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=212"
+  },
+  {
+    "id": 219,
+    "name": "Улица Горчакова",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=213"
+  },
+  {
+    "id": 220,
+    "name": "Улица Дмитриевского",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=390"
+  },
+  {
+    "id": 221,
+    "name": "Улица Милашенкова",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=214"
+  },
+  {
+    "id": 222,
+    "name": "Улица Сергея Эйзенштейна",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=215"
+  },
+  {
+    "id": 223,
+    "name": "Улица Скобелевская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=216"
+  },
+  {
+    "id": 224,
+    "name": "Улица Старокачаловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=192"
+  },
+  {
+    "id": 225,
+    "name": "Университет",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=217"
+  },
+  {
+    "id": 226,
+    "name": "Филатов луг",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=385"
+  },
+  {
+    "id": 227,
+    "name": "Филевский Парк",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=218"
+  },
+  {
+    "id": 228,
+    "name": "Фили",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=219"
+  },
+  {
+    "id": 229,
+    "name": "Фонвизинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=245"
+  },
+  {
+    "id": 230,
+    "name": "Фрунзенская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=220"
+  },
+  {
+    "id": 231,
+    "name": "Ховрино",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=347"
+  },
+  {
+    "id": 232,
+    "name": "Хорошёво",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=349"
+  },
+  {
+    "id": 233,
+    "name": "Хорошёвская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=348"
+  },
+  {
+    "id": 234,
+    "name": "Царицыно",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=221"
+  },
+  {
+    "id": 235,
+    "name": "Цветной Бульвар",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=222"
+  },
+  {
+    "id": 236,
+    "name": "ЦСКА",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=350"
+  },
+  {
+    "id": 237,
+    "name": "Черкизовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=223"
+  },
+  {
+    "id": 238,
+    "name": "Чертановская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=224"
+  },
+  {
+    "id": 239,
+    "name": "Чеховская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=225"
+  },
+  {
+    "id": 240,
+    "name": "Чистые Пруды",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=226"
+  },
+  {
+    "id": 241,
+    "name": "Чкаловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=227"
+  },
+  {
+    "id": 242,
+    "name": "Шаболовская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=228"
+  },
+  {
+    "id": 243,
+    "name": "Шелепиха",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=318"
+  },
+  {
+    "id": 244,
+    "name": "Шипиловская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=229"
+  },
+  {
+    "id": 245,
+    "name": "Шоссе Энтузиастов",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=230"
+  },
+  {
+    "id": 246,
+    "name": "Щелковская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=231"
+  },
+  {
+    "id": 247,
+    "name": "Щукинская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=232"
+  },
+  {
+    "id": 248,
+    "name": "Электрозаводская",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=233"
+  },
+  {
+    "id": 249,
+    "name": "Юго-Западная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=234"
+  },
+  {
+    "id": 250,
+    "name": "Южная",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=235"
+  },
+  {
+    "id": 251,
+    "name": "Ясенево",
+    "link": "https://msk.beauty.firmika.ru/metro.php?metro=236"
+  },
+  {
+    "id": 300,
+    "name": "Метро не указано",
+    "link": ""
+  }
+]
