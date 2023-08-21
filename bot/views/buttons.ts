@@ -11,7 +11,7 @@ export const stepBackButton = Markup.inlineKeyboard([
 ]).extra();
 
 export const startButton = Markup.inlineKeyboard([
-  Markup.callbackButton('Искать по метро 1 - 125', 'metros_125'),
-  Markup.callbackButton('Искать по метро 126 - 251', 'metros_251')
+  [Markup.callbackButton('Искать по метро 1 - 125', 'metros_125')],
+  [Markup.callbackButton('Искать по метро 126 - 251', 'metros_251')]
 
 ]).extra();
