@@ -89,12 +89,15 @@ class BeautyParserBot {
     const session = await this.sessionManager.getSession(ctx);
     session.userState = 1;
     await this.sessionManager.saveSession(ctx, session);
-
+    session.metroNumber = -1;
+    session.districtNumber = -1;
     await ctx.reply(message, startButton);
   }
 
   private async answerState1(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
+
+    session.metroNumber = -1
 
     let areaId = session.areasNumber
     if (ctx.message && ctx.message.text[0] !== '/') {
@@ -124,6 +127,8 @@ class BeautyParserBot {
   private async answerState2(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
     let districtId = session.districtNumber;
+
+    session.metroNumber = -1
 
     if (ctx.message && ctx.message.text[0] !== '/') {
       districtId = parseInt(ctx.message.text);
@@ -181,6 +186,8 @@ class BeautyParserBot {
       return;
     }
     const session = await this.sessionManager.getSession(ctx);
+
+    session.districtNumber = -1
     const metroId = parseInt(ctx.message.text);
     let salons = await prisma.salon.findMany({
       where: {
@@ -201,17 +208,30 @@ class BeautyParserBot {
 
   private async answerSortedSalonsByPrice(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
-    let salons = await prisma.salon.findMany({
-      where: {
-        districtId: session.districtNumber
-      }
-    });
+    if (session.districtNumber !== -1) {
+      let salons = await prisma.salon.findMany({
+        where: {
+          districtId: session.districtNumber
+        }
+      });
+      salons.sort((a: any, b: any) => {
+        return a.price - b.price;
+      });
+      await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
 
-    salons.sort((a: any, b: any) => {
-      return a.price - b.price;
-    });
+    }
+    else if (session.metroNumber !== -1) {
+      let salons = await prisma.salon.findMany({
+        where: {
+          metroId: session.metroNumber
+        }
+      });
+      salons.sort((a: any, b: any) => {
+        return a.price - b.price;
+      });
+      await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
 
-    await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
+    }
     session.userState = 3;
 
     await this.sessionManager.saveSession(ctx, session);
@@ -219,17 +239,28 @@ class BeautyParserBot {
 
   private async answerSortedSalonsByRating(ctx: TelegrafContext) {
     const session = await this.sessionManager.getSession(ctx);
+    if (session.districtNumber !== -1) {
+      let salons = await prisma.salon.findMany({
+        where: {
+          districtId: session.districtNumber
+        }
+      });
+      salons.sort((a: any, b: any) => b.rating - a.rating);
+      await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
 
-    let salons = await prisma.salon.findMany({
-      where: {
-        districtId: session.districtNumber
-      }
-    });
+    }
+    else if (session.metroNumber !== -1) {
+      let salons = await prisma.salon.findMany({
+        where: {
+          metroId: session.metroNumber
+        }
+      });
+      salons.sort((a: any, b: any) => b.rating - a.rating);
+      await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
 
-    salons.sort((a: any, b: any) => b.rating - a.rating);
-
-    await ctx.reply(await MessageCreator.getMessageWithSalons(salons), sortButtons);
-
+    }
+    console.log(session.districtNumber, session.metroNumber)
+    // @ts-ignore
 
     session.userState = 3;
     await this.sessionManager.saveSession(ctx, session);
@@ -277,10 +308,17 @@ class BeautyParserBot {
     const session = await this.sessionManager.getSession(ctx);
     console.log('Current userState: ', session.userState);
 
-    if (session.userState > 1) session.userState -= 2;
+    if (session.userState === 3 && session.metroNumber !== -1) {
+      session.userState = 4;
+      await this.answerByState(ctx);
+    }
+
+    if (session.userState > 1 && session.userState < 4) session.userState -= 2;
+    else if (session.userState === 4) session.userState = 0;
     await this.sessionManager.saveSession(ctx, session);
 
     console.log('Current userState: ', session.userState);
+
 
     await this.answerByState(ctx);
   }

@@ -14,7 +14,7 @@ const SessionManager_1 = require("./utils/SessionManager");
 const client_1 = require("@prisma/client");
 const MessageCreator_1 = require("./MessageCreator");
 const buttons_1 = require("./views/buttons");
-const botToken = '6628382472:AAFBJaVDoVSPg8sI5Hk1Bkltq2Pg_i8d4ho';
+const botToken = '6073480961:AAEO81LcCTWzEJ7b-QcEZH3W6jOT17IW_Tw';
 const prisma = new client_1.PrismaClient();
 class BeautyParserBot {
     constructor(botToken) {
@@ -61,12 +61,15 @@ class BeautyParserBot {
             const session = yield this.sessionManager.getSession(ctx);
             session.userState = 1;
             yield this.sessionManager.saveSession(ctx, session);
+            session.metroNumber = -1;
+            session.districtNumber = -1;
             yield ctx.reply(message, buttons_1.startButton);
         });
     }
     answerState1(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield this.sessionManager.getSession(ctx);
+            session.metroNumber = -1;
             let areaId = session.areasNumber;
             if (ctx.message && ctx.message.text[0] !== '/') {
                 areaId = parseInt(ctx.message.text);
@@ -91,6 +94,7 @@ class BeautyParserBot {
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield this.sessionManager.getSession(ctx);
             let districtId = session.districtNumber;
+            session.metroNumber = -1;
             if (ctx.message && ctx.message.text[0] !== '/') {
                 districtId = parseInt(ctx.message.text);
             }
@@ -137,6 +141,7 @@ class BeautyParserBot {
                 return;
             }
             const session = yield this.sessionManager.getSession(ctx);
+            session.districtNumber = -1;
             const metroId = parseInt(ctx.message.text);
             let salons = yield prisma.salon.findMany({
                 where: {
@@ -155,15 +160,28 @@ class BeautyParserBot {
     answerSortedSalonsByPrice(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield this.sessionManager.getSession(ctx);
-            let salons = yield prisma.salon.findMany({
-                where: {
-                    districtId: session.districtNumber
-                }
-            });
-            salons.sort((a, b) => {
-                return a.price - b.price;
-            });
-            yield ctx.reply(yield MessageCreator_1.MessageCreator.getMessageWithSalons(salons), buttons_1.sortButtons);
+            if (session.districtNumber !== -1) {
+                let salons = yield prisma.salon.findMany({
+                    where: {
+                        districtId: session.districtNumber
+                    }
+                });
+                salons.sort((a, b) => {
+                    return a.price - b.price;
+                });
+                yield ctx.reply(yield MessageCreator_1.MessageCreator.getMessageWithSalons(salons), buttons_1.sortButtons);
+            }
+            else if (session.metroNumber !== -1) {
+                let salons = yield prisma.salon.findMany({
+                    where: {
+                        metroId: session.metroNumber
+                    }
+                });
+                salons.sort((a, b) => {
+                    return a.price - b.price;
+                });
+                yield ctx.reply(yield MessageCreator_1.MessageCreator.getMessageWithSalons(salons), buttons_1.sortButtons);
+            }
             session.userState = 3;
             yield this.sessionManager.saveSession(ctx, session);
         });
@@ -171,13 +189,26 @@ class BeautyParserBot {
     answerSortedSalonsByRating(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             const session = yield this.sessionManager.getSession(ctx);
-            let salons = yield prisma.salon.findMany({
-                where: {
-                    districtId: session.districtNumber
-                }
-            });
-            salons.sort((a, b) => b.rating - a.rating);
-            yield ctx.reply(yield MessageCreator_1.MessageCreator.getMessageWithSalons(salons), buttons_1.sortButtons);
+            if (session.districtNumber !== -1) {
+                let salons = yield prisma.salon.findMany({
+                    where: {
+                        districtId: session.districtNumber
+                    }
+                });
+                salons.sort((a, b) => b.rating - a.rating);
+                yield ctx.reply(yield MessageCreator_1.MessageCreator.getMessageWithSalons(salons), buttons_1.sortButtons);
+            }
+            else if (session.metroNumber !== -1) {
+                let salons = yield prisma.salon.findMany({
+                    where: {
+                        metroId: session.metroNumber
+                    }
+                });
+                salons.sort((a, b) => b.rating - a.rating);
+                yield ctx.reply(yield MessageCreator_1.MessageCreator.getMessageWithSalons(salons), buttons_1.sortButtons);
+            }
+            console.log(session.districtNumber, session.metroNumber);
+            // @ts-ignore
             session.userState = 3;
             yield this.sessionManager.saveSession(ctx, session);
         });
@@ -226,8 +257,14 @@ class BeautyParserBot {
             console.log('Start going back');
             const session = yield this.sessionManager.getSession(ctx);
             console.log('Current userState: ', session.userState);
-            if (session.userState > 1)
+            if (session.userState === 3 && session.metroNumber !== -1) {
+                session.userState = 4;
+                yield this.answerByState(ctx);
+            }
+            if (session.userState > 1 && session.userState < 4)
                 session.userState -= 2;
+            else if (session.userState === 4)
+                session.userState = 0;
             yield this.sessionManager.saveSession(ctx, session);
             console.log('Current userState: ', session.userState);
             yield this.answerByState(ctx);
